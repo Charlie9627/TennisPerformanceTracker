@@ -1,9 +1,6 @@
-// Full Name: Charlie Vue
-// Class: ITCS 2530 - C++ Programming
-// GitHub Repo URL: https://github.com/YourUsername/TennisPerformanceTracker
-// One-Sentence Summary: A C++ program that tracks tennis performance stats and offers personalized feedback.
-// Your posted hobby or interest: Tennis
-// AI Tool(s) Used: ChatGPT
+// Charlie Vue
+// Class: ITCS 2530 - C++ Programming Final Exam
+// Project Detail: A C++ program that tracks tennis performance stats and offers personalized feedback.
 
 #include <iostream>
 #include <fstream>
@@ -14,21 +11,21 @@ using namespace std;
 
 const int MAX_PLAYERS = 10;
 
-// Struct to hold tennis performance data
+// Struct to hold tennis performance data with initialized members
 struct MatchStats {
-    string playerName;
-    int aces;
-    int doubleFaults;
-    int unforcedErrors;
-    int winners;
-    float performanceScore;
+    string playerName = "";
+    int aces = 0;
+    int doubleFaults = 0;
+    int unforcedErrors = 0;
+    int winners = 0;
+    float performanceScore = 0.0f;
 };
 
 // Class to manage tennis data and logic
 class TennisTracker {
 private:
     MatchStats stats[MAX_PLAYERS];
-    int count;
+    int count = 0;
     string inputFileName;
     string outputFileName;
 
@@ -37,7 +34,6 @@ public:
     TennisTracker(string inputFile, string outputFile) {
         inputFileName = inputFile;
         outputFileName = outputFile;
-        count = 0;
     }
 
     // Read match data from input file
@@ -49,10 +45,10 @@ public:
         }
 
         while (count < MAX_PLAYERS && infile >> stats[count].playerName
-               >> stats[count].aces
-               >> stats[count].doubleFaults
-               >> stats[count].unforcedErrors
-               >> stats[count].winners) {
+            >> stats[count].aces
+            >> stats[count].doubleFaults
+            >> stats[count].unforcedErrors
+            >> stats[count].winners) {
             count++;
         }
 
@@ -84,22 +80,22 @@ public:
     // Display all data to console
     void displayAll() {
         cout << left << setw(15) << "Player"
-             << setw(6) << "Aces"
-             << setw(10) << "DFaults"
-             << setw(10) << "UErrors"
-             << setw(9) << "Winners"
-             << setw(10) << "Score"
-             << "Feedback" << endl;
+            << setw(6) << "Aces"
+            << setw(10) << "DFaults"
+            << setw(10) << "UErrors"
+            << setw(9) << "Winners"
+            << setw(10) << "Score"
+            << "Feedback" << endl;
         cout << string(70, '-') << endl;
 
         for (int i = 0; i < count; ++i) {
             cout << left << setw(15) << stats[i].playerName
-                 << setw(6) << stats[i].aces
-                 << setw(10) << stats[i].doubleFaults
-                 << setw(10) << stats[i].unforcedErrors
-                 << setw(9) << stats[i].winners
-                 << fixed << setprecision(1) << setw(10) << stats[i].performanceScore
-                 << giveFeedback(stats[i]) << endl;
+                << setw(6) << stats[i].aces
+                << setw(10) << stats[i].doubleFaults
+                << setw(10) << stats[i].unforcedErrors
+                << setw(9) << stats[i].winners
+                << fixed << setprecision(1) << setw(10) << stats[i].performanceScore
+                << giveFeedback(stats[i]) << endl;
         }
     }
 
@@ -113,12 +109,12 @@ public:
 
         for (int i = 0; i < count; ++i) {
             outfile << stats[i].playerName << " "
-                    << stats[i].aces << " "
-                    << stats[i].doubleFaults << " "
-                    << stats[i].unforcedErrors << " "
-                    << stats[i].winners << " "
-                    << fixed << setprecision(1) << stats[i].performanceScore << " "
-                    << giveFeedback(stats[i]) << endl;
+                << stats[i].aces << " "
+                << stats[i].doubleFaults << " "
+                << stats[i].unforcedErrors << " "
+                << stats[i].winners << " "
+                << fixed << setprecision(1) << stats[i].performanceScore << " "
+                << giveFeedback(stats[i]) << endl;
         }
 
         outfile.close();
@@ -151,40 +147,43 @@ int main() {
         cin >> choice;
 
         switch (choice) {
-            case 1:
-                if (tracker.readFromFile()) {
-                    cout << "Data loaded successfully.\n";
-                    dataLoaded = true;
-                }
-                break;
-            case 2:
-                if (dataLoaded) {
-                    tracker.calculatePerformance();
-                    cout << "Performance scores calculated.\n";
-                    calculated = true;
-                } else {
-                    cout << "Please load data first.\n";
-                }
-                break;
-            case 3:
-                if (calculated) {
-                    tracker.displayAll();
-                } else {
-                    cout << "Please calculate scores first.\n";
-                }
-                break;
-            case 4:
-                if (calculated) {
-                    tracker.writeToFile();
-                } else {
-                    cout << "Please calculate scores before saving.\n";
-                }
-                break;
-            case 5:
-                cout << "Exiting program. Goodbye!\n";
-                break;
-            default:
-                cout << "Invalid choice. Try again.\n";
+        case 1:
+            if (tracker.readFromFile()) {
+                cout << "Data loaded successfully.\n";
+                dataLoaded = true;
+            }
+            break;
+        case 2:
+            if (dataLoaded) {
+                tracker.calculatePerformance();
+                cout << "Performance scores calculated.\n";
+                calculated = true;
+            }
+            else {
+                cout << "Please load data first.\n";
+            }
+            break;
+        case 3:
+            if (calculated) {
+                tracker.displayAll();
+            }
+            else {
+                cout << "Please calculate scores first.\n";
+            }
+            break;
+        case 4:
+            if (calculated) {
+                tracker.writeToFile();
+            }
+            else {
+                cout << "Please calculate scores before saving.\n";
+            }
+            break;
+        case 5:
+            cout << "Exiting program. Goodbye!\n";
+            break;
+        default:
+            cout << "Invalid choice. Try again.\n";
         }
 
     } while (choice != 5);
